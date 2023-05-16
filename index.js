@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const cors = require('cors');
 var bodyParser = require('body-parser');
 
 //routes 
@@ -18,7 +17,7 @@ const path = require("path")
 
 dotenv.config()
 
-PORT = process.env.PORT
+PORT = 8800
 URL = process.env.CONNECTION_URL
 
 mongoose
@@ -30,7 +29,6 @@ mongoose
     .catch(err => console.log(err));
 
 
-app.use(cors);
 //cross origin 
 app.use((req, res, next) => {
     const allowedOrigins = ['http://localhost:3000'];
@@ -38,7 +36,6 @@ app.use((req, res, next) => {
     if (allowedOrigins.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
-    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
     res.header('Access-Control-Allow-Methods', 'GET, OPTIONS, PUT');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.header('Access-Control-Allow-Credentials', true);
@@ -62,7 +59,6 @@ app.use("/api/v1/posts", postRoutes)
 app.use("/api/v1/upload", uploadRoutes)
 
 app.get('/', (req, res) => {
-    res.setHeader('Access-Control-Allow-Credentials', true);
     res.send("Welcome to homepage")
 })
 
